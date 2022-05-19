@@ -1,0 +1,35 @@
+---
+- name: create volume
+  hosts: "localhost"
+  become: no
+  gather_facts: no
+  vars:
+    cluster: "{{ source.cluster }}"
+    aggregate: "{{ source.aggregate }}"
+    svm: "{{ source.svm }}"
+    volname: "{{ source.volname }}"
+    secstyle: "{{ source.secstyle | default(volume_defaults.secstyle) | default(omit) }}"
+    volsize: "{{ source.volsize|int }}"
+    clusterauth:  &login
+      hostname: "{{ cluster }}"
+      username: "admin"
+      password: "Netapp12"
+      https: true
+      validate_certs: false
+  vars_files:
+  #- volume_variables.yaml
+  - ../globals.yaml
+
+  collections:
+  - netapp.ontap
+  tasks:
+    - name: Create prod volume (flexvol)
+      na_ontap_volume:
+        state: present
+        aggregate_name: "{{ aggregate }}"
+        name: "{{ volname }}"
+        vserver: "{{ svm }}"
+        size: "{{ volsize|int }}"
+        junction_path: "{{ '/'+volname }}"
+        wait_for_completion: yes
+        <<: *login

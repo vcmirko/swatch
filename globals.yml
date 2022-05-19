@@ -1,0 +1,12 @@
+volume_defaults:
+    secstyle: ntfs
+domains:
+    slash.local:
+        dnsservers:
+        - 172.16.0.32
+        ou: CN=Computers
+general:
+services:
+    cifs:
+        bi:
+          # add custom mappings
