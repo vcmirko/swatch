@@ -30,6 +30,7 @@
         name: "{{ volname }}"
         vserver: "{{ svm }}"
         size: "{{ volsize|int }}"
+        size_unit: mb
         junction_path: "{{ '/'+volname }}"
         wait_for_completion: yes
         <<: *login
