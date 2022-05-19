@@ -38,7 +38,7 @@
         <<: *login
 
     - name: Create qtree
-      na_ontap_volume:
+      na_ontap_qtree:
         state: present
         flexvol_name: "{{ volname }}"
         name: "{{ volname }}"
