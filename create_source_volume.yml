@@ -18,7 +18,7 @@
       validate_certs: false
   vars_files:
   #- volume_variables.yaml
-  - ./globals.yaml
+  - ./globals.yml
 
   collections:
   - netapp.ontap
