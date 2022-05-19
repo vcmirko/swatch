@@ -8,6 +8,7 @@
     aggregate: "{{ source.aggregate }}"
     svm: "{{ source.svm }}"
     volname: "{{ source.volname }}"
+    junctionpath: "{{ '/'+volname }}"
     secstyle: "{{ source.secstyle | default(volume_defaults.secstyle) | default(omit) }}"
     volsize: "{{ source.volsize|int }}"
     clusterauth:  &login
@@ -31,6 +32,14 @@
         vserver: "{{ svm }}"
         size: "{{ volsize|int }}"
         size_unit: mb
-        junction_path: "{{ '/'+volname }}"
+        junction_path: "{{ junctionpath }}"
         wait_for_completion: yes
+        <<: *login
+
+    - name: Create cifs
+      na_ontap_cifs:
+        state: present
+        name: "{{ volname }}"
+        vserver: "{{ svm }}"
+        path: "{{ junctionpath }}"
         <<: *login
