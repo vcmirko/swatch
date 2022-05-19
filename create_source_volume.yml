@@ -39,7 +39,7 @@
     - name: Create cifs
       na_ontap_cifs:
         state: present
-        name: "{{ volname }}"
+        share_name: "{{ volname }}"
         vserver: "{{ svm }}"
         path: "{{ junctionpath }}"
         <<: *login
