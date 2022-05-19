@@ -9,7 +9,7 @@
     svm: "{{ source.svm }}"
     volname: "{{ source.volname }}"
     secstyle: "{{ source.secstyle | default(volume_defaults.secstyle) | default(omit) }}"
-    volsize: "{{ source.volsize|int * 1024 }}"
+    volsize: "{{ source.volsize|int }}"
     clusterauth:  &login
       hostname: "{{ cluster }}"
       username: "admin"
