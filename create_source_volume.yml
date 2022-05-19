@@ -9,7 +9,7 @@
     svm: "{{ source.svm }}"
     volname: "{{ source.volname }}"
     secstyle: "{{ source.secstyle | default(volume_defaults.secstyle) | default(omit) }}"
-    volsize: "{{ source.volsize|int }}"
+    volsize: "{{ source.volsize|int * 1024 }}"
     clusterauth:  &login
       hostname: "{{ cluster }}"
       username: "admin"
@@ -18,7 +18,7 @@
       validate_certs: false
   vars_files:
   #- volume_variables.yaml
-  - ../globals.yaml
+  - ./globals.yaml
 
   collections:
   - netapp.ontap
