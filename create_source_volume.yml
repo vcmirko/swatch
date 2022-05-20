@@ -11,11 +11,11 @@
     junctionpath: "{{ '/'+volname }}"
     junctionpathqtree: "{{ junctionpath + '/' + volname }}"
     secstyle: "{{ source.secstyle | default(volume_defaults.secstyle) | default(omit) }}"
-    volsize: "{{ source.volsize|int }}"
+    volsize: "{{ source.volsize|int | default(50) }}"
     clusterauth:  &login
       hostname: "{{ cluster }}"
-      username: "admin"
-      password: "Netapp12"
+      username: "{{ ontap_username }}"
+      password: "{{ ontap_password}}"
       https: true
       validate_certs: false
   vars_files:
