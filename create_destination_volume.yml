@@ -43,7 +43,7 @@
         state: present
         source_volume: "{{source_volname}}"
         destination_volume : "{{volname}}"
-        source_vserver: "{{source_vserver}}"
+        source_vserver: "{{source_svm}}"
         destination_vserver: "{{svm}}"
         policy: MirrorAllSnapshots
         <<: *login
