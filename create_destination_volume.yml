@@ -1,5 +1,5 @@
 ---
-- name: create volume
+- name: create destination volume and snapmirror
   hosts: "localhost"
   become: no
   gather_facts: no
@@ -34,7 +34,6 @@
         vserver: "{{ svm }}"
         size: "{{ volsize|int }}"
         size_unit: mb
-        junction_path: "{{ junctionpath }}"
         wait_for_completion: yes
         type: dp
         <<: *login

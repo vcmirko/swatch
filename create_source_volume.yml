@@ -1,5 +1,5 @@
 ---
-- name: create volume
+- name: create source volume
   hosts: "localhost"
   become: no
   gather_facts: no
