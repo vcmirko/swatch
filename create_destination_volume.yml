@@ -40,7 +40,7 @@
     - name: Create snapmirror
       na_ontap_snapmirror:
         state: present
-        source_endpoint: "{{source_endpoint}}"
+        source_path: "{{source_endpoint}}"
         destination_volume : "{{volname}}"
         destination_vserver: "{{svm}}"
         <<: *login
