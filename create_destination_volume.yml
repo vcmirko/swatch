@@ -41,7 +41,7 @@
     - name: Create snapmirror
       na_ontap_snapmirror:
         state: present
-        source_volume: "{{source_volume}}"
+        source_volume: "{{source_volname}}"
         destination_volume : "{{volname}}"
         source_vserver: "{{source_vserver}}"
         destination_vserver: "{{svm}}"
