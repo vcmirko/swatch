@@ -4,8 +4,7 @@
   become: no
   gather_facts: no
   vars:
-    source_svm: "{{ source.svm }}"
-    source_volname: "{{ source.volname }}"
+    source_endpoint: "{{ source.svm + ':/' + source_volname }}"
     cluster: "{{ destination.cluster }}"
     aggregate: "{{ destination.aggregate }}"
     svm: "{{ destination.svm }}"
@@ -41,9 +40,7 @@
     - name: Create snapmirror
       na_ontap_snapmirror:
         state: present
-        source_volume: "{{source_volname}}"
+        source_endpoint: "{{source_endpoint}}"
         destination_volume : "{{volname}}"
-        source_vserver: "{{source_svm}}"
         destination_vserver: "{{svm}}"
-        policy: MirrorAllSnapshots
         <<: *login
