@@ -1,0 +1,50 @@
+---
+- name: create volume
+  hosts: "localhost"
+  become: no
+  gather_facts: no
+  vars:
+    source_svm: "{{ source.svm }}"
+    source_volname: "{{ source.volname }}"
+    cluster: "{{ destination.cluster }}"
+    aggregate: "{{ destination.aggregate }}"
+    svm: "{{ destination.svm }}"
+    volname: "{{ destination.volname }}"
+    junctionpath: "{{ '/'+volname }}"
+    junctionpathqtree: "{{ junctionpath + '/' + volname }}"
+    volsize: "{{ source.volsize|int | default(50) }}"
+    clusterauth:  &login
+      hostname: "{{ cluster }}"
+      username: "{{ ontap_username }}"
+      password: "{{ ontap_password}}"
+      https: true
+      validate_certs: false
+  vars_files:
+  #- volume_variables.yaml
+  - ./globals.yml
+
+  collections:
+  - netapp.ontap
+  tasks:
+    - name: Create prod volume
+      na_ontap_volume:
+        state: present
+        aggregate_name: "{{ aggregate }}"
+        name: "{{ volname }}"
+        vserver: "{{ svm }}"
+        size: "{{ volsize|int }}"
+        size_unit: mb
+        junction_path: "{{ junctionpath }}"
+        wait_for_completion: yes
+        type: dp
+        <<: *login
+
+    - name: Create snapmirror
+      na_ontap_snapmirror:
+        state: present
+        source_volume: "{{source_volume}}"
+        destination_volume : "{{volname}}"
+        source_vserver: "{{source_vserver}}"
+        destination_vserver: "{{svm}}"
+        policy: MirrorAllSnapshots
+        <<: *login

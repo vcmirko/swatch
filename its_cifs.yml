@@ -2,3 +2,6 @@
 
 - name: Create volume on source
   import_playbook: create_source_volume.yml
+
+- name: Create volume on destination and snapmirror
+  import_playbook: create_destination_volume.yml
