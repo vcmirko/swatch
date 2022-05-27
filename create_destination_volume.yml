@@ -79,13 +79,12 @@
         junction_path: "{{ junctionpath }}"
         <<: *login
 
-    - name: Mount qtree
-      na_ontap_qtree:
+    - name: Create cifs
+      na_ontap_cifs:
         state: present
-        flexvol_name: "{{ volname }}"
-        name: "{{ volname }}"
+        share_name: "{{ volname }}"
         vserver: "{{ svm }}"
-        junction_path: "{{ junctionpathqtree }}"
+        path: "{{ junctionpathqtree }}"
         <<: *login
 
     - name: Resync snapmirror
