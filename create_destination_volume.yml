@@ -67,8 +67,8 @@
         destination_vserver: "{{svm}}"
         <<: *login
       register: result
-      retries: 5
-      delay: 10
+      retries: 5 # wait for initialized
+      delay: 10 # wait 10 secs per try
       until: result is not failed
 
     - name: Mount volume
