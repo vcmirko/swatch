@@ -5,3 +5,4 @@
 
 - name: Create volume on destination and snapmirror
   import_playbook: create_destination_volume.yml
+  when: enable_mirror

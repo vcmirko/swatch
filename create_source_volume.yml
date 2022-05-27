@@ -43,6 +43,7 @@
         flexvol_name: "{{ volname }}"
         name: "{{ volname }}"
         vserver: "{{ svm }}"
+        wait_for_completion: yes
         <<: *login
 
     - name: Create cifs
