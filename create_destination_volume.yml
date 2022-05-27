@@ -46,3 +46,40 @@
         destination_volume : "{{volname}}"
         destination_vserver: "{{svm}}"
         <<: *login
+
+    - name: Break snapmirror
+      na_ontap_snapmirror:
+        state: present
+        relationship_state: broken
+        source_volume: "{{source_volname}}"
+        source_vserver: "{{source_svm}}"
+        destination_volume : "{{volname}}"
+        destination_vserver: "{{svm}}"
+        <<: *login
+
+    - name: Mount volume
+      na_ontap_volume:
+        state: present
+        name: "{{ volname }}"
+        vserver: "{{ svm }}"
+        junction_path: "{{ junctionpath }}"
+        <<: *login
+
+    - name: Mount qtree
+      na_ontap_qtree:
+        state: present
+        flexvol_name: "{{ volname }}"
+        name: "{{ volname }}"
+        vserver: "{{ svm }}"
+        junction_path: "{{ junctionpathqtree }}"
+        <<: *login
+
+    - name: Resync snapmirror
+      na_ontap_snapmirror:
+        state: present
+        relationship_state: active
+        source_volume: "{{source_volname}}"
+        source_vserver: "{{source_svm}}"
+        destination_volume : "{{volname}}"
+        destination_vserver: "{{svm}}"
+        <<: *login                     
