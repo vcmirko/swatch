@@ -47,6 +47,16 @@
         destination_vserver: "{{svm}}"
         <<: *login
 
+    - name:  snapmirror
+      na_ontap_snapmirror:
+        state: present
+        relationship_state: active
+        source_volume: "{{source_volname}}"
+        source_vserver: "{{source_svm}}"
+        destination_volume : "{{volname}}"
+        destination_vserver: "{{svm}}"
+        <<: *login
+
     - name: Break snapmirror
       na_ontap_snapmirror:
         state: present
@@ -56,6 +66,10 @@
         destination_volume : "{{volname}}"
         destination_vserver: "{{svm}}"
         <<: *login
+      register: result
+      retries: 5
+      delay: 10
+      until: result is not failed
 
     - name: Mount volume
       na_ontap_volume:
@@ -82,4 +96,4 @@
         source_vserver: "{{source_svm}}"
         destination_volume : "{{volname}}"
         destination_vserver: "{{svm}}"
-        <<: *login                     
+        <<: *login
